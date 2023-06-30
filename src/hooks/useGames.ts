@@ -18,10 +18,13 @@ const useGames = () => {
 
   //   Fetch games from API
   useEffect(() => {
-    // Handle cancelations
+    // 2. Handle cancelations
+
+    // 2.1 create new AbortController
     const controller = new AbortController();
 
     apiClient
+      // 2.2 pass a object to get() with controller.signal
       .get<GameResponse>("/games", { signal: controller.signal })
       .then((res) => setGames(res.data.results))
       .catch((err) => {
@@ -29,6 +32,8 @@ const useGames = () => {
         setError(err.message);
       });
 
+    //   2.3 return a cleanup function for the useEffect() hook
+    //          and call controller.abort() in the callback
     return () => controller.abort();
   }, []);
 
