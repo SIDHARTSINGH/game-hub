@@ -13,6 +13,7 @@ export interface Game {
   name: string;
   background_image: string;
   parent_platforms: { platform: Platform }[]; // array of objects : each object has a platform property of type Platform
+  metacritic: number;
 }
 
 interface GameResponse {
