@@ -1,7 +1,9 @@
-import useGenres from "../hooks/useGanres";
+import useGenres from "../hooks/useGenres";
 
 const GenreList = () => {
-  const { genres } = useGenres();
+  // using a generic data fetching hook
+  //    rename destructred property using alias {data : ganres}
+  const { data: genres } = useGenres();
 
   return (
     <ul>
