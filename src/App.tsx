@@ -36,7 +36,10 @@ function App() {
         <Show above="lg">
           {/* above="lg" : Render on large screens and above */}
           <GridItem area="aside" pl={10}>
-            <GenreList onSelectGenre={(genre) => handleSelectGenre(genre)} />
+            <GenreList
+              onSelectGenre={(genre) => handleSelectGenre(genre)}
+              selectedGenre={selectedGenre}
+            />
           </GridItem>
         </Show>
         <GridItem area="main" pr={10}>
