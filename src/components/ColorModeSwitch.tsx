@@ -37,6 +37,7 @@ const ColorModeSwitch = () => {
       <HStack justifyContent={"space-between"} paddingX={10}>
         <IconButton
           aria-label="Color Mode Switch"
+          size={"lg"}
           icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
           variant="transparent"
           onClick={toggleColorMode}

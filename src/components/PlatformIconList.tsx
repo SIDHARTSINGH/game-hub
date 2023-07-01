@@ -37,7 +37,7 @@ const PlatformIconList = ({ platforms }: Props) => {
 
   return (
     <>
-      <HStack my={1}>
+      <HStack>
         {platforms.map((platform) => (
           <Icon
             key={platform.slug}
