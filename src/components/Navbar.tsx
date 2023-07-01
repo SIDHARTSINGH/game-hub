@@ -1,14 +1,12 @@
 import { Flex, HStack, Heading, Image } from "@chakra-ui/react";
 
 import ColorModeSwitch from "./ColorModeSwitch";
-import logo from "../assets/logo.webp";
 
 const Navbar = () => {
   return (
     <>
-      <HStack justifyContent={"space-between"} padding={"15px"}>
+      <HStack justifyContent={"space-between"} py={"15px"} px={"20px"}>
         <Flex>
-          {/* <Image src={logo} boxSize={"50px"} /> */}
           <Heading
             size="md"
             fontWeight={"850"}
