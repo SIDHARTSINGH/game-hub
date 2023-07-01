@@ -1,46 +1,62 @@
-// Generic Data Fetching Hook
+// Adding Query String Param to useData() hook to fetch games on the basis of genre
 
 import { useEffect, useState } from "react";
 import apiClient from "../services/apiClient";
-import { CanceledError } from "axios";
+import { AxiosRequestConfig, CanceledError } from "axios";
 
-// 2. create Response interface
-//      it has 'results' property of type T[] :
-//      add generic type param <T> to Response and in get<Response<T>>
 interface Response<T> {
   count: number;
   results: T[];
 }
 
-// 1. add generic type param <T> in useData and <T[]> in useState
-// 3. take 'endpoint' as parameter and pass to the methods
-const useData = <T>(endpoint: string) => {
+// AxiosRequestConfig object :
+// we can data in request body, set query string params
+
+// 1. updata parameter of useData() hook : (requestBody?: AxiosRequestConfig)
+// 2. pass selectedGenre when calling the useData() hook : in useGames() hook
+// 3. while requesting call : second param  : after setting the signal : spread requestBody to get any additional properties
+
+// 4. update parameter of useData() hook : (deps?: any[])
+// 5. pass the dependencies as an array : when calling the useData() hook : in useGames() hook
+// 6. pass the dependencies in the DependeciesList of the useEffect() hook
+const useData = <T>(
+  endpoint: string,
+  requestBody?: AxiosRequestConfig,
+  deps?: any[]
+) => {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
+  useEffect(
+    () => {
+      const controller = new AbortController();
 
-    setLoading(true);
-    apiClient
-      .get<Response<T>>(endpoint, { signal: controller.signal })
-      .then((res) => {
-        setData(res.data.results);
-        // setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError(err.message);
-        // setLoading(false);
-      })
+      setLoading(true);
+      apiClient
+        .get<Response<T>>(endpoint, {
+          signal: controller.signal,
+          ...requestBody, // axiosRequestConfig object
+        })
+        .then((res) => {
+          setData(res.data.results);
+          // setLoading(false);
+        })
+        .catch((err) => {
+          if (err instanceof CanceledError) return;
+          setError(err.message);
+          // setLoading(false);
+        })
 
-      .finally(() => {
-        setLoading(false);
-      });
+        .finally(() => {
+          setLoading(false);
+        });
 
-    return () => controller.abort();
-  }, []);
+      return () => controller.abort();
+    },
+    // pass the dependencies in the array : if it is not null
+    deps ? [...deps] : []
+  );
 
   return { data, error, isLoading };
 };

@@ -1,4 +1,4 @@
-import { Flex, HStack, Heading, Image } from "@chakra-ui/react";
+import { Flex, HStack, Heading } from "@chakra-ui/react";
 
 import ColorModeSwitch from "./ColorModeSwitch";
 

@@ -3,8 +3,17 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
+import { useState } from "react";
+import { Genre } from "./hooks/useGenres";
 
 function App() {
+  // state variable can either hold a 'Genre' oject or 'null : useState<Genre | null>()
+  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+
+  const handleSelectGenre = (genre: Genre) => {
+    setSelectedGenre(genre);
+  };
+
   return (
     <>
       <Grid
@@ -26,12 +35,12 @@ function App() {
         </GridItem>
         <Show above="lg">
           {/* above="lg" : Render on large screens and above */}
-          <GridItem area="aside" px={5}>
-            <GenreList />
+          <GridItem area="aside" pl={10}>
+            <GenreList onSelectGenre={(genre) => handleSelectGenre(genre)} />
           </GridItem>
         </Show>
-        <GridItem area="main">
-          <GameGrid />
+        <GridItem area="main" pr={10}>
+          <GameGrid selectedGenre={selectedGenre} />
         </GridItem>
       </Grid>
     </>

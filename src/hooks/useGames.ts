@@ -1,4 +1,5 @@
 import useData from "./useData";
+import { Genre } from "./useGenres";
 
 export interface Platform {
   id: number;
@@ -14,6 +15,20 @@ export interface Game {
   metacritic: number;
 }
 
-const useGames = () => useData<Game>("/games");
+const useGames = (selectedGenre: Genre | null) => {
+  return useData<Game>(
+    // endpoint
+    "/games",
+
+    // we need pass the selectedGenre as a query param :
+    // in the 'axiosRequestConfig' object
+    { params: { genres: selectedGenre?.id } },
+
+    // we need pass the selectedGenre as a dependency to the useEffect() hook:
+    // so that, the useEffect() hook will be called when selectedGenre changes
+    // as an list of deps
+    [selectedGenre?.id]
+  );
+};
 
 export default useGames;
