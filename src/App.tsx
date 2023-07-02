@@ -16,21 +16,23 @@ import { Genre } from "./hooks/useGenres";
 import { Platform } from "./hooks/useGames";
 import PlatformSelector from "./components/PlatformSelector";
 
-function App() {
-  // state variable can either hold a 'Genre' oject or 'null : useState<Genre | null>()
-  const [selectedGenre, setSelectedGenre] = useState<Genre | null>(null);
+// Using QueryObject pattern to minimize the number of state variables
+export interface GameQuery {
+  genre: Genre | null;
+  platform: Platform | null;
+}
 
-  // state variable to keeping track of the selected platform
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
-    null
-  );
+function App() {
+  // useState<GameQuery>([] as GameQuery) : ERROR
+  // :  Type 'never[]' is missing the following properties from type 'GameQuery': genre, platform
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   const handleSelectGenre = (genre: Genre) => {
-    setSelectedGenre(genre);
+    setGameQuery({ ...gameQuery, genre });
   };
 
   const handleSelectPlatform = (platform: Platform) => {
-    console.log(platform);
+    setGameQuery({ ...gameQuery, platform });
   };
 
   return (
@@ -50,17 +52,21 @@ function App() {
         }}
       >
         <GridItem area="nav">
+          {/* Navbar */}
           <Navbar />
         </GridItem>
+
         <Show above="lg">
           {/* above="lg" : Render on large screens and above */}
           <GridItem area="aside" pl={10}>
+            {/* GenreList */}
             <GenreList
+              selectedGenre={gameQuery.genre}
               onSelectGenre={(genre) => handleSelectGenre(genre)}
-              selectedGenre={selectedGenre}
             />
           </GridItem>
         </Show>
+
         <GridItem area="main" pr={10}>
           {/* Heading */}
           <Heading>
@@ -70,16 +76,16 @@ function App() {
             </Text>
           </Heading>
 
+          {/* PlatformSelector */}
           <HStack pb={3}>
             <PlatformSelector
-              selectedPlatform={selectedPlatform}
-              onSelectPlatform={(platform) => setSelectedPlatform(platform)}
+              selectedPlatform={gameQuery.platform}
+              onSelectPlatform={(platform) => handleSelectPlatform(platform)}
             />
           </HStack>
-          <GameGrid
-            selectedGenre={selectedGenre}
-            selectedPlatform={selectedPlatform}
-          />
+
+          {/* GameGrid */}
+          <GameGrid gameQuery={gameQuery} />
         </GridItem>
       </Grid>
     </>
