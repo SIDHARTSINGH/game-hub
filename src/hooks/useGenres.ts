@@ -1,4 +1,4 @@
-import useData from "./useData";
+import genres from "../data/genres";
 
 export interface Genre {
   id: number;
@@ -6,10 +6,10 @@ export interface Genre {
   image_background: string;
 }
 
-// Abstract away the implementation using a generic data fetching hook
-//    specify the generic type argument and endpoint while calling
-
-// Hide 'endpoints' and 'making http requests' from the GenreList Component
-const useGenres = () => useData<Genre>("/genres");
+// fetching static data
+// return an object with these properties :
+//  - Minimal impact on the component
+//  - in the future, switch back to fetching from the server
+const useGenres = () => ({ data: genres, isLoading: null, error: null });
 
 export default useGenres;
