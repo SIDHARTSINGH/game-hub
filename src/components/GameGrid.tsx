@@ -1,17 +1,15 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
-import useGames, { Platform } from "../hooks/useGames";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
+import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
 import { GameQuery } from "../App";
 
-// Refactor : accept GameQuery as a Prop
 interface Props {
   gameQuery: GameQuery;
 }
 
 const GameGrid = ({ gameQuery }: Props) => {
-  // Refactor : pass GameQuery to useGames() hook
   const { data: games, error, isLoading } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8];
 

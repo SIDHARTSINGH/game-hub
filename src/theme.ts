@@ -1,7 +1,3 @@
-// 1. Implementing Dark Mode
-
-// 1.1 add file theme.ts
-
 import { extendTheme, ThemeConfig } from "@chakra-ui/react";
 import { buttonTheme } from "./components/ColorModeSwitch";
 

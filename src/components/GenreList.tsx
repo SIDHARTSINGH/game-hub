@@ -16,8 +16,6 @@ interface Props {
 }
 
 const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
-  // using a generic data fetching hook
-  //    rename destructred property using alias {data : ganres}
   const { data: genres, isLoading } = useGenres();
 
   return (
@@ -34,7 +32,6 @@ const GenreList = ({ onSelectGenre, selectedGenre }: Props) => {
                 src={getCroppedImageurl(genre.image_background)}
                 boxSize={"32px"}
                 borderRadius={"full"}
-                // images will be scaled to fit the container while preserving the aspect ratio
                 objectFit={"cover"}
               />
               <Button
