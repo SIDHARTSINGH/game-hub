@@ -4,15 +4,18 @@ import { Game } from "../hooks/useGames";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
 import getCroppedImageurl from "../services/image-url";
+import noImagePlaceholder from "../assets/no-image-placeholder.webp";
 
 interface Props {
   game: Game;
 }
 
 const GameCard = ({ game }: Props) => {
+  const cardImageUrl = getCroppedImageurl(game.background_image);
+
   return (
     <Card>
-      <Image src={getCroppedImageurl(game.background_image)}></Image>
+      <Image src={cardImageUrl ? cardImageUrl : noImagePlaceholder} />
       <CardBody p={4}>
         <Heading fontSize={"25px"}>{game.name}</Heading>
         <HStack justifyContent={"space-between"} my={"1"}>

@@ -22,9 +22,11 @@ const useGames = (gameQuery: GameQuery) => {
     "/games",
     {
       // Refactor : update params
+      // params object's property are specific : described in the API docs : cannot be changed
       params: {
         genres: gameQuery.genre?.id,
         platforms: gameQuery.platform?.id,
+        ordering: gameQuery.sortOrder,
       },
     },
     // Refactor : update deps
