@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { Grid, GridItem, HStack, Heading, Show, Text } from "@chakra-ui/react";
+
 import "./App.css";
 import "./index.css";
 import Navbar from "./components/Navbar";
 import GameGrid from "./components/GameGrid";
 import GenreList from "./components/GenreList";
-import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
 import { Platform } from "./hooks/useGames";
 import PlatformSelector from "./components/PlatformSelector";
