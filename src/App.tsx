@@ -15,6 +15,7 @@ import { useState } from "react";
 import { Genre } from "./hooks/useGenres";
 import { Platform } from "./hooks/useGames";
 import PlatformSelector from "./components/PlatformSelector";
+import SortSelector from "./components/SortSelector";
 
 // Using QueryObject pattern to minimize the number of state variables
 export interface GameQuery {
@@ -77,11 +78,12 @@ function App() {
           </Heading>
 
           {/* PlatformSelector */}
-          <HStack pb={3}>
+          <HStack spacing={3} pb={3}>
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
               onSelectPlatform={(platform) => handleSelectPlatform(platform)}
             />
+            <SortSelector />
           </HStack>
 
           {/* GameGrid */}
