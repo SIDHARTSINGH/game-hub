@@ -1,9 +1,13 @@
-import { Flex, HStack, Heading } from "@chakra-ui/react";
+import { HStack, Heading } from "@chakra-ui/react";
 
 import ColorModeSwitch from "./ColorModeSwitch";
 import SearchInput from "./searchInput";
 
-const Navbar = () => {
+interface Props {
+  onSearch: (searchText: string) => void;
+}
+
+const Navbar = ({ onSearch }: Props) => {
   return (
     <>
       <HStack py={"15px"} px={"20px"}>
@@ -16,7 +20,7 @@ const Navbar = () => {
         >
           RAWG
         </Heading>
-        <SearchInput />
+        <SearchInput onSearch={onSearch} />
         <ColorModeSwitch />
       </HStack>
     </>
