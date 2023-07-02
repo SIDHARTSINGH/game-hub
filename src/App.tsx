@@ -53,7 +53,7 @@ function App() {
           base: "1fr", // 1 fraction
 
           // large devices: 2 columns
-          lg: "200px 1fr", // 1st column - 200px | 2nd column - all of the rest
+          lg: "220px 1fr", // 1st column - 200px | 2nd column - all of the rest
         }}
       >
         <GridItem area="nav">
@@ -82,7 +82,7 @@ function App() {
           </Heading>
 
           {/* PlatformSelector */}
-          <HStack spacing={3} pb={3}>
+          <HStack spacing={3} pb={6}>
             <PlatformSelector
               selectedPlatform={gameQuery.platform}
               onSelectPlatform={(platform) => handleSelectPlatform(platform)}
