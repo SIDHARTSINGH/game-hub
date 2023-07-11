@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Response } from "./useData";
 import { Platform } from "./useGames";
-import apiClient from "../services/apiClient";
+import apiClient, { Response } from "../services/apiClient";
 import platforms from "../data/platforms";
 
 const usePlatforms = () =>

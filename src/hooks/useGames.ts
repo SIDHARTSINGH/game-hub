@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import useData from "./useData";
+import apiClient, { Response } from "../services/apiClient";
 
 export interface Platform {
   id: number;
@@ -16,22 +17,20 @@ export interface Game {
 }
 
 // Refactor : accept GameQuery as argument
-const useGames = (gameQuery: GameQuery) => {
-  return useData<Game>(
-    "/games",
-    {
-      // Refactor : update params
-      // params object's property are specific : described in the API docs : cannot be changed
-      params: {
-        genres: gameQuery.genre?.id,
-        parent_platforms: gameQuery.platform?.id,
-        ordering: gameQuery.sortOrder,
-        search: gameQuery.searchText,
-      },
-    },
-    // Refactor : update deps
-    [gameQuery]
-  );
-};
+const useGames = (gameQuery: GameQuery) =>
+  useQuery<Response<Game>, Error>({
+    queryKey: ["games", gameQuery],
+    queryFn: () =>
+      apiClient
+        .get<Response<Game>>("/games", {
+          params: {
+            genres: gameQuery.genre?.id,
+            parent_platforms: gameQuery.platform?.id,
+            ordering: gameQuery.sortOrder,
+            search: gameQuery.searchText,
+          },
+        })
+        .then((res) => res.data),
+  });
 
 export default useGames;
