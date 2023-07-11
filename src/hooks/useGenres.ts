@@ -1,4 +1,10 @@
+// for fetching static data
 import genres from "../data/genres";
+
+import { useQuery } from "@tanstack/react-query";
+import APIClient from "../services/apiClient";
+
+const apiClient = new APIClient<Genre>("/genres");
 
 export interface Genre {
   id: number;
@@ -6,10 +12,12 @@ export interface Genre {
   image_background: string;
 }
 
-// fetching static data
-// return an object with these properties :
-//  - Minimal impact on the component
-//  - in the future, switch back to fetching from the server
-const useGenres = () => ({ data: genres, isLoading: null, error: null });
+const useGenres = () =>
+  useQuery({
+    queryKey: ["genres"],
+    queryFn: apiClient.getAll,
+    staleTime: 24 * 60 * 60 * 1000,
+    initialData: { count: genres.length, results: genres },
+  });
 
 export default useGenres;
