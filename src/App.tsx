@@ -12,9 +12,11 @@ import PlatformSelector from "./components/PlatformSelector";
 import SortSelector from "./components/SortSelector";
 
 // Using QueryObject pattern to minimize the number of state variables
+// undefined : absence of a value  : same as ?
+// null : intentional absence of a value
 export interface GameQuery {
-  genre: Genre | null;
-  platform: Platform | null;
+  genreId?: number;
+  platformId?: number;
   sortOrder: string;
   searchText: string;
 }
@@ -25,11 +27,11 @@ function App() {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   const handleSelectGenre = (genre: Genre) => {
-    setGameQuery({ ...gameQuery, genre });
+    setGameQuery({ ...gameQuery, genreId: genre.id });
   };
 
   const handleSelectPlatform = (platform: Platform) => {
-    setGameQuery({ ...gameQuery, platform });
+    setGameQuery({ ...gameQuery, platformId: platform.id });
   };
 
   const handleSelectSortOrder = (sortOrder: string) => {
@@ -67,7 +69,7 @@ function App() {
           <GridItem area="aside" pl={10}>
             {/* GenreList */}
             <GenreList
-              selectedGenre={gameQuery.genre}
+              selectedGenreId={gameQuery.genreId}
               onSelectGenre={(genre) => handleSelectGenre(genre)}
             />
           </GridItem>
@@ -85,7 +87,7 @@ function App() {
           {/* PlatformSelector */}
           <HStack spacing={3} pb={6}>
             <PlatformSelector
-              selectedPlatform={gameQuery.platform}
+              selectedPlatformId={gameQuery.platformId}
               onSelectPlatform={(platform) => handleSelectPlatform(platform)}
             />
             <SortSelector
