@@ -24,7 +24,7 @@ const useGames = (gameQuery: GameQuery) => {
       // params object's property are specific : described in the API docs : cannot be changed
       params: {
         genres: gameQuery.genre?.id,
-        platforms: gameQuery.platform?.id,
+        parent_platforms: gameQuery.platform?.id,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchText,
       },
