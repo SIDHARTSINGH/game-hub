@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { GameQuery } from "../App";
-import apiClient, { Response } from "../services/apiClient";
+import APIClient, { Response } from "../services/apiClient";
+
+const apiClient = new APIClient<Game>("/games");
 
 export interface Platform {
   id: number;
@@ -16,21 +18,21 @@ export interface Game {
   metacritic: number;
 }
 
-// Refactor : accept GameQuery as argument
 const useGames = (gameQuery: GameQuery) =>
   useQuery<Response<Game>, Error>({
     queryKey: ["games", gameQuery],
+    // Can't just reference the function :
+    //  queryFn: apiClient.get :
+    // since, we need to pass a config object
     queryFn: () =>
-      apiClient
-        .get<Response<Game>>("/games", {
-          params: {
-            genres: gameQuery.genre?.id,
-            parent_platforms: gameQuery.platform?.id,
-            ordering: gameQuery.sortOrder,
-            search: gameQuery.searchText,
-          },
-        })
-        .then((res) => res.data),
+      apiClient.getAll({
+        params: {
+          genres: gameQuery.genre?.id,
+          parent_platforms: gameQuery.platform?.id,
+          ordering: gameQuery.sortOrder,
+          search: gameQuery.searchText,
+        },
+      }),
   });
 
 export default useGames;
