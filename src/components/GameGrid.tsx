@@ -5,7 +5,6 @@ import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
 import React from "react";
-import useGameQueryStore from "../services/store";
 
 const GameGrid = () => {
   const {
