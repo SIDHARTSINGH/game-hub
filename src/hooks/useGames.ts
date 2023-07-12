@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { GameQuery } from "../App";
 import APIClient, { Response } from "../services/apiClient";
+import useGameQueryStore from "../services/store";
 
 const apiClient = new APIClient<Game>("/games");
 
@@ -18,10 +18,12 @@ export interface Game {
   metacritic: number;
 }
 
-const useGames = (gameQuery: GameQuery) =>
+const useGames = () => {
+  const gameQuery = useGameQueryStore((s) => s.gameQuery);
+
   // Passing generic type arguments only in useGames() :
   // since, gameGrid component handles error : the type of error object is not known
-  useInfiniteQuery<Response<Game>, Error>({
+  return useInfiniteQuery<Response<Game>, Error>({
     queryKey: ["games", gameQuery],
 
     // for infinite query : receiving page number as a parameter
@@ -46,5 +48,6 @@ const useGames = (gameQuery: GameQuery) =>
     },
     staleTime: 24 * 60 * 60 * 1000,
   });
+};
 
 export default useGames;
